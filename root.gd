@@ -23,21 +23,26 @@ func _ready():
 	#print(list_files_in_directory('1'))
 	
 func refresh_items(layer):
-	for child in $PanelContainer4/VBoxContainer.get_children():
+	for child in $PanelContainer4/ScrollContainer/VBoxContainer.get_children():
 		child.free()
 	var dirfiles = list_files_in_directory('res://Sprites/Male/Layer%s' % str(int(layer)-1))
+	
 	for i in range(0, len(dirfiles)):
 		var label_character = sprites_characters.instance()
-		$PanelContainer4/VBoxContainer.add_child(label_character)
-		$PanelContainer4/VBoxContainer.get_children()[i].set_text(dirfiles[i])
-		$PanelContainer4/VBoxContainer.get_children()[i].connect("pressed_sprite", self, "_on_button_sprite_pressed")
-
+		$PanelContainer4/ScrollContainer/VBoxContainer.add_child(label_character)
+		$PanelContainer4/ScrollContainer/VBoxContainer.get_children()[i].set_text(dirfiles[i])
+		$PanelContainer4/ScrollContainer/VBoxContainer.get_children()[i].connect("pressed_sprite", self, "_on_button_sprite_pressed")
+	var label_dots = sprites_characters.instance()
+	$PanelContainer4/ScrollContainer/VBoxContainer.add_child(label_dots)
+	$PanelContainer4/ScrollContainer/VBoxContainer.get_children()[-1].set_text('Delete layer')
+	$PanelContainer4/ScrollContainer/VBoxContainer.get_children()[-1].connect("pressed_sprite", self, "_on_button_sprite_pressed")
+	
 func _on_button_pressed(number):
 	glob.layer = number
 	refresh_items(glob.layer)
 
 func _on_button_sprite_pressed(itemname):
-	var nodename = 'PanelContainer4/VBoxContainer/%s' % itemname
+	var nodename = 'PanelContainer4/ScrollContainer/VBoxContainer/%s' % itemname
 	var mybutton = get_node('%s' % nodename)
 	var filename = mybutton.get_text()
 	var mylayer
@@ -45,7 +50,11 @@ func _on_button_sprite_pressed(itemname):
 		mylayer = str(glob.layer)
 	else:
 		mylayer = str(glob.layer - 1)
-	$"PanelContainer3/Sprite".texture = load('res://Sprites/Male/Layer%s/%s' % [mylayer, str(filename)])
+	for sprite in $PanelContainer3.get_children():
+		sprite.texture = load('res://Sprites/Male/Layer%s/%s' % [mylayer, str(filename)])
+	var spritepath = 'PanelContainer2/VBoxContainer/CenterContainer/Sprite%s' % mylayer
+	get_node(spritepath).texture = load('res://Sprites/Male/Layer%s/%s' % [mylayer, str(filename)])
+	glob.alllayers[mylayer] = 'Sprites/Male/Layer%s/%s' % [mylayer, str(filename)]
 
 func list_files_in_directory(path):
 	var files = []
@@ -62,3 +71,14 @@ func list_files_in_directory(path):
 		dir.list_dir_end()
 	
 	return files
+
+func _on_Button_pressed():
+	var output = []
+	var imagecommand = []
+	for item in glob.alllayers:
+		if glob.alllayers[item] != '':
+			imagecommand += ['-page', 0, glob.alllayers[item]]
+	imagecommand += ['-set', 'page', '', '-background', 'none', '-layers', 'merge', '-bordercolor', 'none', 'output/result.png' ]
+	OS.execute('convert', imagecommand, true, output)
+	print(glob.alllayers)
+	#convert -page 0 {Male_Hair_25_B,Male_Skin_01,Male_Eyes_01}.png -set page '' -background none -layers merge -bordercolor none result.png 
