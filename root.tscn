@@ -1,0 +1,74 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://root.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Male/Layer0/Male_Hair_25_B.png" type="Texture" id=2]
+[ext_resource path="res://sprite.tscn" type="PackedScene" id=3]
+[ext_resource path="res://GUI/arrow.png" type="Texture" id=4]
+
+[node name="root" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="PanelContainer3" type="PanelContainer" parent="."]
+margin_left = 9.0
+margin_top = 61.0
+margin_right = 345.0
+margin_bottom = 600.0
+size_flags_horizontal = 11
+
+[node name="Sprite" type="Sprite" parent="PanelContainer3"]
+position = Vector2( 166.132, 268.852 )
+scale = Vector2( 0.52, 0.640001 )
+texture = ExtResource( 2 )
+
+[node name="PanelContainer2" type="PanelContainer" parent="."]
+margin_left = 363.0
+margin_top = 62.0
+margin_right = 697.0
+margin_bottom = 598.0
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" parent="PanelContainer2" instance=ExtResource( 3 )]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 327.0
+margin_bottom = 529.0
+
+[node name="PanelContainer4" type="PanelContainer" parent="."]
+margin_left = 727.0
+margin_top = 6.0
+margin_right = 1019.0
+margin_bottom = 606.0
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer4"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 285.0
+margin_bottom = 593.0
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_left = 69.1664
+margin_top = 2.3327
+margin_right = 664.166
+margin_bottom = 52.3327
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 588.0
+margin_bottom = 43.0
+
+[node name="Sprite2" type="Sprite" parent="."]
+position = Vector2( 692.611, 24.5466 )
+rotation = -8.74228e-08
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 33.3744, 24.5466 )
+rotation = -3.14159
+scale = Vector2( 0.05, -0.05 )
+texture = ExtResource( 4 )
+

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://new_theme.tres" type="Theme" id=1]
+[ext_resource path="res://Label_n.gd" type="Script" id=2]
+
+[node name="Label_n" type="Button"]
+margin_right = 37.0
+margin_bottom = 39.0
+theme = ExtResource( 1 )
+custom_colors/font_color = Color( 0.592157, 0.0196078, 0.572549, 1 )
+text = "1"
+script = ExtResource( 2 )
+
+[connection signal="pressed" from="." to="." method="_on_Label_n_pressed"]
